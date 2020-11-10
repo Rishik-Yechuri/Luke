@@ -19,6 +19,16 @@ namespace Luke
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D backgroundTexture;
+        Rectangle backgroundRectangle;
+        SoundEffect effecet1;
+        SoundEffect effecet2;
+        SoundEffect effecet3;
+        SoundEffect effecet4;
+        SoundEffect effecet5;
+        SoundEffect effecet6;
+        SpriteFont font1;
+        KeyboardState oldKb = Keyboard.GetState();
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -34,7 +44,7 @@ namespace Luke
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            backgroundRectangle = new Rectangle(0, 0, 800, 480);
             base.Initialize();
         }
 
@@ -46,7 +56,14 @@ namespace Luke
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            effecet1 = Content.Load<SoundEffect>("900YEARS");
+            effecet2 = Content.Load<SoundEffect>("ACKBAR");
+            effecet3 = Content.Load<SoundEffect>("AckForce");
+            effecet4 = Content.Load<SoundEffect>("blaster-firing");
+            effecet5 = Content.Load<SoundEffect>("CARGO");
+            effecet6 = Content.Load<SoundEffect>("chewycry");
+            backgroundTexture = Content.Load<Texture2D>("Star Wars #0");
+            font1 = Content.Load<SpriteFont>("SpriteFont1");
             // TODO: use this.Content to load your game content here
         }
 
@@ -71,7 +88,29 @@ namespace Luke
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            KeyboardState kb = Keyboard.GetState();
+            if (kb.IsKeyDown(Keys.Q)) {
+                effecet1.Play();
+            } else if (kb.IsKeyDown(Keys.W)) {
+                effecet2.Play();
+            }
+            else if (kb.IsKeyDown(Keys.E))
+            {
+                effecet3.Play();
+            }
+            else if (kb.IsKeyDown(Keys.R))
+            {
+                effecet4.Play();
+            }
+            else if (kb.IsKeyDown(Keys.T))
+            {
+                effecet5.Play();
+            }
+            else if (kb.IsKeyDown(Keys.Y))
+            {
+                effecet6.Play();
+            }
+            oldKb = kb;
             base.Update(gameTime);
         }
 
@@ -84,7 +123,15 @@ namespace Luke
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            spriteBatch.Draw(backgroundTexture, backgroundRectangle, Color.White);
+            spriteBatch.DrawString(font1,"Q=900YEARS",new Vector2(20,30),Color.White);
+            spriteBatch.DrawString(font1, "W=ACKBAR", new Vector2(20, 60), Color.White);
+            spriteBatch.DrawString(font1, "E=AckForce", new Vector2(20, 90), Color.White);
+            spriteBatch.DrawString(font1, "R=blaster-firing", new Vector2(20, 120), Color.White);
+            spriteBatch.DrawString(font1, "T=CARGO", new Vector2(20, 150), Color.White);
+            spriteBatch.DrawString(font1, "Y=chewycry", new Vector2(20, 180), Color.White);
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
